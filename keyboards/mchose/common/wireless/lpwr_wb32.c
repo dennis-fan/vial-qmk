@@ -9,6 +9,10 @@
 #    include "uart.h"
 #endif
 
+#ifndef UART_RX_PAL_MODE
+#    define UART_RX_PAL_MODE PAL_MODE_INPUT
+#endif
+
 static ioline_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static ioline_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 
