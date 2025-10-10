@@ -47,7 +47,8 @@ enum {
     MD_SND_CMD_MANUFACTURER = 0xAB,
     MD_SND_CMD_PRODUCT      = 0xAC,
     MD_SND_CMD_VPID         = 0xAD,
-    MD_SND_CMD_RAW          = 0x91,
+    MD_SND_CMD_RAW          = 0xAF,
+    MD_SND_CMD_RAW_IN       = 0x61,
     /* device ctrl */
     MD_SND_CMD_DEVCTRL                    = 0xA6,
     MD_SND_CMD_DEVCTRL_USB                = 0x11,
@@ -77,7 +78,8 @@ enum {
 };
 
 enum {
-    MD_REV_CMD_RAW                  = 0x81,
+    MD_REV_CMD_RAW                  = 0xAF,
+    MD_REV_CMD_RAW_OUT              = 0x60,
     MD_REV_CMD_INDICATOR            = 0x5A,
     MD_REV_CMD_DEVCTRL              = 0x5B,
     MD_REV_CMD_DEVCTRL_BAT_LOW      = 0x21, // unused
@@ -112,7 +114,7 @@ void md_send_manufacturer(char *str, uint8_t len);
 void md_send_product(char *str, uint8_t len);
 void md_send_vpid(uint16_t vid, uint16_t pid);
 void md_send_raw(uint8_t *data, uint8_t length);
-bool md_send_pkt(uint8_t *data, uint32_t len);
+void md_send_pkt(uint8_t *data, uint32_t len);
 bool md_receive_process_user(uint8_t *pdata, uint8_t len);
 void md_devs_change(uint8_t devs, bool reset);
 bool md_inquire_bat(void);

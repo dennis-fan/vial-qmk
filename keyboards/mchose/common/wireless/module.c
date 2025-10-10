@@ -128,6 +128,7 @@ static void md_receive_msg_task(void) {
         switch (data_count) {
             case 0: { // cmd
                 switch (data) {
+                    case MD_REV_CMD_RAW:
                     case MD_REV_CMD_INDICATOR:
                     case MD_REV_CMD_DEVCTRL:
                     case MD_REV_CMD_BATVOL:
@@ -136,10 +137,6 @@ static void md_receive_msg_task(void) {
                     case 0x61: {
                         md_rev_payload[data_count++] = data;
                         data_remain                  = 2;
-                    } break;
-                    case MD_REV_CMD_RAW: {
-                        md_rev_payload[data_count++] = data;
-                        data_remain                  = 33;
                     } break;
                     default: {
                         data_count = 0;
@@ -160,6 +157,13 @@ static void md_receive_msg_task(void) {
                     }
                     data_count = 0;
                     return;
+                }
+
+                // raw data
+                if ((md_rev_payload[0] == MD_REV_CMD_RAW) && (md_rev_payload[1] == MD_REV_CMD_RAW_OUT)) {
+                    md_rev_payload[data_count++] = data;
+                    data_remain                  = data + 1;
+                    continue;
                 }
             }
             default: {
@@ -182,11 +186,15 @@ static void md_receive_msg_task(void) {
             switch (md_rev_payload[0]) {
                 case MD_REV_CMD_RAW: {
                     uint8_t *pdata;
-                    pdata = &md_rev_payload[1];
+                    uint8_t len;
 
-                    memcpy(md_raw_payload, pdata, 32);
-                    md_receive_raw_cb(md_raw_payload, 32);
+                    len   = md_rev_payload[2];
+                    pdata = &md_rev_payload[3];
 
+                    if (len == sizeof(md_raw_payload)) {
+                        memcpy(md_raw_payload, pdata, len);
+                        md_receive_raw_cb(md_raw_payload, len);
+                    }
                 } break;
                 case MD_REV_CMD_INDICATOR: {
                     md_info.indicator = md_rev_payload[1];
@@ -251,12 +259,9 @@ static void md_send_pkt_task(void) {
         case smsg_state_free: {
             uint32_t size = smsg_peek(md_pkt_payload);
             if (size) {
-                if (md_send_pkt(md_pkt_payload, size)) {
-                    smsg_timer = sync_timer_read32();
-                    smsg_set_state(smsg_state_busy);
-                } else {
-                    smsg_set_state(smsg_state_replied);
-                }
+                md_send_pkt(md_pkt_payload, size);
+                smsg_timer = sync_timer_read32();
+                smsg_set_state(smsg_state_busy);
             }
         } break;
         default:
@@ -298,25 +303,14 @@ uint8_t md_get_version(void) {
     return md_info.version;
 }
 
-bool md_send_pkt(uint8_t *data, uint32_t len) {
-    bool retval = true;
+void md_send_pkt(uint8_t *data, uint32_t len) {
 
     if (!data || !len) {
-        return false;
+        return;
     }
-
-    // switch (*data) {
-    //     case MD_SND_CMD_RAW: {
-    //         retval = false;
-    //     } break;
-    //     default:
-    //         break;
-    // }
 
     // send
     uart_transmit(data, len);
-
-    return retval;
 }
 
 void md_send_kb(uint8_t *data) {
@@ -439,14 +433,16 @@ void md_send_vpid(uint16_t vid, uint16_t pid) {
 }
 
 void md_send_raw(uint8_t *data, uint8_t length) {
-    uint8_t sdata[MD_RAW_SIZE + 2] = {0x00};
+    uint8_t sdata[MD_RAW_SIZE + 4] = {0x00};
 
     if (length != MD_RAW_SIZE) {
         return;
     }
 
     sdata[0] = MD_SND_CMD_RAW;
-    memcpy(&sdata[1], data, length);
+    sdata[1] = MD_SND_CMD_RAW_IN;
+    sdata[2] = length;
+    memcpy(&sdata[3], data, length);
     md_calc_check_sum(sdata, sizeof(sdata) - 1);
     smsg_push(sdata, sizeof(sdata));
 }
