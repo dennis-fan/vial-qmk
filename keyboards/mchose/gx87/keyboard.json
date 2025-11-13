@@ -181,6 +181,7 @@
         "force_nkro": true,
         "pid": "0x006F",
         "suspend_wakeup_delay": 1000,
+
         "vid": "0xFFFE"
     },
     "layouts": {
