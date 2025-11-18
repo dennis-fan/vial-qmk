@@ -33,3 +33,4 @@
 
 #undef WB32_USBPRE
 #define WB32_USBPRE WB32_USBPRE_DIV2
+

@@ -17,7 +17,7 @@
     "features": {
         "bootmagic": true,
         "command": false,
-        "console": false,
+        "console": true,
         "deferred_exec": true,
         "extrakey": true,
         "haptic": false,
@@ -164,10 +164,10 @@
             { "flags": 1, "matrix": [5,14], "x": 193, "y": 62},
             { "flags": 1, "matrix": [5,15], "x": 206, "y": 62},
             { "flags": 1, "matrix": [5,16], "x": 218, "y": 62},
-            { "flags": 2, "x": 181, "y": 42},
-            { "flags": 2, "x": 193, "y": 42},
-            { "flags": 2, "x": 206, "y": 42},
-            { "flags": 2, "x": 218, "y": 42}
+            { "flags": 0, "x": 181, "y": 42},
+            { "flags": 0, "x": 193, "y": 42},
+            { "flags": 0, "x": 206, "y": 42},
+            { "flags": 0, "x": 218, "y": 42}
         ],
         "max_brightness": 100,
         "sleep": false,

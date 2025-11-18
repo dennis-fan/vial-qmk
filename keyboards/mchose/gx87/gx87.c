@@ -6,6 +6,10 @@
 #ifdef WIRELESS_ENABLE
 #    include "wireless.h"
 #endif
+#include "keys.h"
+#include "print.h"
+#include "indicator.h"
+
 #ifdef RGB_MATRIX_ENABLE
 const snled27351_led_t PROGMEM g_snled27351_leds[SNLED27351_LED_COUNT] = {
 /* Refer to IS31 manual for these locations
@@ -121,34 +125,22 @@ confinfo_t confinfo;
 
 uint32_t post_init_timer = 0x00;
 
-void eeconfig_confinfo_update(uint32_t raw) {
-
-    eeconfig_update_kb(raw);
-}
-
-uint32_t eeconfig_confinfo_read(void) {
-
-    return eeconfig_read_kb();
-}
-
 void eeconfig_confinfo_default(void) {
-
+    confinfo.raw = 0;
     confinfo.flag = true;
 #ifdef WIRELESS_ENABLE
     confinfo.devs = DEVS_USB;
     confinfo.BTdevs = DEVS_BT1;
 #endif
 
-    eeconfig_confinfo_update(confinfo.raw);
+    eeconfig_update_kb_datablock(&confinfo, 0, WB_EECONFIG_DATA_SIZE);
 }
 
-void eeconfig_confinfo_init(void) {
-
-    confinfo.raw = eeconfig_confinfo_read();
-    if (!confinfo.raw) {
-        eeconfig_confinfo_default();
-    }
+void eeconfig_init_kb(void) {
+    eeconfig_confinfo_default();
+    indicator_eeprom_init();
 }
+
 static void bt_scan_mode(void) {
 #ifdef BT_MODE_SW_PIN
     if (readPin(RF_MODE_SW_PIN) && !readPin(BT_MODE_SW_PIN)) {
@@ -174,7 +166,7 @@ void keyboard_post_init_kb(void) {
     debug_enable = true;
 #endif
 
-    eeconfig_confinfo_init();
+    eeconfig_read_kb_datablock(&confinfo, 0, WB_EECONFIG_DATA_SIZE);
 
 #ifdef LED_POWER_EN_PIN
     gpio_set_pin_output(LED_POWER_EN_PIN);
@@ -195,6 +187,8 @@ void keyboard_post_init_kb(void) {
     wireless_devs_change(!confinfo.devs, confinfo.devs, false);
     post_init_timer = timer_read32();
 #endif
+
+    post_init_hooks();
 
     keyboard_post_init_user();
 }
@@ -251,7 +245,7 @@ void wireless_post_task(void) {
 
 uint32_t wls_process_long_press(uint32_t trigger_time, void *cb_arg) {
     uint16_t keycode = *((uint16_t *)cb_arg);
-
+    
     switch (keycode) {
         case KC_BT1: {
             if(wireless_get_current_devs() == DEVS_BT1)
@@ -345,6 +339,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
 
+    if(!process_indicator_keycodes(keycode, record)) return false;
+
     switch (keycode) {
         default:
             return true;
@@ -382,7 +378,7 @@ void wireless_devs_change_kb(uint8_t old_devs, uint8_t new_devs, bool reset) {
         if ((wireless_get_current_devs() != DEVS_USB) && (wireless_get_current_devs() != DEVS_2G4)) {
             confinfo.BTdevs = wireless_get_current_devs();
         }
-        eeconfig_confinfo_update(confinfo.raw);
+        eeconfig_update_kb_datablock(&confinfo, 0, WB_EECONFIG_DATA_SIZE);
     }
 
     switch (new_devs) {
@@ -474,9 +470,10 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     rgb_matrix_wls_indicator();
 #    endif
 
+    process_indicators();
+
     return true;
 }
-
 
 void md_devs_change(uint8_t devs, bool reset) {
 
