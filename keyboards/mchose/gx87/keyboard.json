@@ -1,7 +1,7 @@
 {
-    "manufacturer": " ",
-    "keyboard_name": "MCHOSE GX87",
-    "maintainer": "JonyLee@HFD",
+    "manufacturer": "MCHOSE",
+    "keyboard_name": "GX87",
+    "maintainer": "PugzAreCute",
     "bootloader": "wb32-dfu",
     "bootmagic": {
         "matrix": [0, 0]
@@ -73,6 +73,9 @@
             "solid_reactive": true,
             "solid_reactive_simple": true,
             "typing_heatmap": true
+        },
+        "default": {
+            "animation": "cycle_left_right"
         },
         "driver": "snled27351",
         "layout": [
@@ -169,7 +172,7 @@
             { "flags": 0, "x": 206, "y": 42},
             { "flags": 0, "x": 218, "y": 42}
         ],
-        "max_brightness": 100,
+        "max_brightness": 150,
         "sleep": false,
         "speed_steps": 35,
         "timeout": 60000,
@@ -178,11 +181,14 @@
     "url": "",
     "usb": {
         "device_version": "1.0.6",
-        "force_nkro": true,
         "pid": "0x006F",
         "suspend_wakeup_delay": 1000,
-
         "vid": "0xFFFE"
+    },
+    "host": {
+        "default": {
+            "nkro": true
+        }
     },
     "layouts": {
         "LAYOUT_ansi": {
