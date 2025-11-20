@@ -384,30 +384,30 @@ void wireless_devs_change_kb(uint8_t old_devs, uint8_t new_devs, bool reset) {
     switch (new_devs) {
         case DEVS_BT1: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(36, (RGB){RGB_BLUE}, 200, 1);
+                rgb_matrix_wls_indicator_set(36, (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(36, (RGB){RGB_BLUE}, 500, 1);
+                rgb_matrix_wls_indicator_set(36, (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         case DEVS_BT2: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(37, (RGB){RGB_BLUE}, 200, 1);
+                rgb_matrix_wls_indicator_set(37, (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(37, (RGB){RGB_BLUE}, 500, 1);
+                rgb_matrix_wls_indicator_set(37, (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         case DEVS_BT3: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(38, (RGB){RGB_BLUE}, 200, 1);
+                rgb_matrix_wls_indicator_set(38, (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(38, (RGB){RGB_BLUE}, 500, 1);
+                rgb_matrix_wls_indicator_set(38, (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         case DEVS_2G4: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(35, (RGB){RGB_BLUE}, 200, 1);
+                rgb_matrix_wls_indicator_set(35, (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(35, (RGB){RGB_BLUE}, 500, 1);
+                rgb_matrix_wls_indicator_set(35, (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         default:
