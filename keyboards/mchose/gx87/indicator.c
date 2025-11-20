@@ -178,7 +178,7 @@ bool process_indicator_keycodes(uint16_t keycode, keyrecord_t *record){
                 update_indicator_color(0,(int)-UINT8_MAX/INDICATOR_BRIGHTNESS_LEVELS);
             }
             return false;
-        case BATT_LEVEL:
+        case BATTERY_LEVEL:
             if(record -> event.pressed){
                 battery_indicator_enabled = true;
             } else {
@@ -186,7 +186,7 @@ bool process_indicator_keycodes(uint16_t keycode, keyrecord_t *record){
                 if(current_mode_requires_update()) handle_indicator_oneshot_modes();
             }
             return false;
-        case INDICATOR_CHG:
+        case INDICATOR_CHRG:
             if(record -> event.pressed){
                 indicator_config.charging_indicator_enabled = !indicator_config.charging_indicator_enabled;
 
