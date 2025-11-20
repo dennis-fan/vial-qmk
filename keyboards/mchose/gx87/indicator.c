@@ -12,6 +12,7 @@ deferred_token charging_token = INVALID_DEFERRED_TOKEN;
 static float gradient_offset = 0.0f;
 static float breathe_offset = 1.0f;
 static bool breathe_up = false;
+uint32_t last_battery_enquiry = 0x00;
 
 
 /* --- EEPROM Handlers --- */
@@ -115,6 +116,7 @@ void post_init_hooks(void){
     eeconfig_read_kb_datablock(&indicator_config, WB_EECONFIG_DATA_SIZE, EECONFIG_KB_DATA_SIZE-WB_EECONFIG_DATA_SIZE);
 
     charging_token = defer_exec(500, charge_callback, NULL);
+    last_battery_enquiry = timer_read32();
     handle_indicator_oneshot_modes();
 }
 
@@ -207,7 +209,11 @@ void process_indicators(void) {
 
 /* --- STATUS: Battery --- */
 void show_battery_indicator(void){
-    md_inquire_bat();
+    if(timer_elapsed32(last_battery_enquiry) > 100){
+        last_battery_enquiry = timer_read32();
+        md_inquire_bat();
+    } 
+    
     uint8_t level = *md_getp_bat();
 
     rgb_matrix_set_color_all(0,0,0);
