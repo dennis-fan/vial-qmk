@@ -62,12 +62,22 @@
     ],
     "matrix": { "rows": 6, "cols": 18 },
     "customKeycodes":[
-        {"name":"BT_HOST1","title":"BT_HOST1","shortName":"BT_HOST1"},
-        {"name":"BT_HOST2","title":"BT_HOST2","shortName":"BT_HOST2"},
-        {"name":"BT_HOST3","title":"BT_HOST3","shortName":"BT_HOST3"},
-        {"name":"BT_2_4G","title": "BT_2_4G","shortName":"BT_2_4G"},
-        {"name":"BT_USB","title":  "BT_USB","shortName":"BT_USB"},
-        {"name":"BT_VOL","title":  "BT_VOL","shortName":"BT_VOL"}
+        {"name": "BT_HOST1", "title": "BT_HOST1", "shortName":"BT_HOST1" },
+        {"name": "BT_HOST2", "title": "BT_HOST2", "shortName":"BT_HOST2" },
+        {"name": "BT_HOST3", "title": "BT_HOST3", "shortName":"BT_HOST3" },
+        {"name": "BT_2_4G",  "title": "BT_2_4G",  "shortName":"BT_2_4G"  },
+        {"name": "BT_USB",   "title": "BT_USB",   "shortName":"BT_USB"   },
+        {"name": "BT_VOL",   "title": "BT_VOL",   "shortName":"BT_VOL"   },
+
+        {"name": "INDICATOR_HUEU", "title": "Indicator Hue Up",          "shortName": "ID_HUEU" },
+        {"name": "INDICATOR_HUED", "title": "Indicator Hue Down",        "shortName": "ID_HUED" },
+        {"name": "INDICATOR_SPDU", "title": "Indicator Speed Up",        "shortName": "ID_SPDU" },
+        {"name": "INDICATOR_SPDD", "title": "Indicator Speed Down",      "shortName": "ID_SPDD" },
+        {"name": "INDICATOR_VALU", "title": "Indicator Brightness Up",   "shortName": "ID_VALU" },
+        {"name": "INDICATOR_VALD", "title": "Indicator Brightness Down", "shortName": "ID_VALD" },
+        {"name": "INDICATOR_MODE", "title": "Indicator Mode",            "shortName": "ID_MODE" },
+        {"name": "INDICATOR_CHRG", "title": "Charging Indicator",        "shortName": "ID_CHRG" },
+        {"name": "BATTERY_LEVEL",  "title": "Battery Level Indicator",   "shortName": "BAT_LVL" }
       ],
     "layouts": {
       "keymap":[
