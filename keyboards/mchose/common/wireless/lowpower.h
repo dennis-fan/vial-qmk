@@ -37,3 +37,4 @@ bool lpwr_get_timeout_manual(void);
 void lpwr_set_state(lpwr_state_t state);
 void lpwr_set_mode(lpwr_mode_t mode);
 void lpwr_task(void);
+void md_receive_host_cb(bool resume);

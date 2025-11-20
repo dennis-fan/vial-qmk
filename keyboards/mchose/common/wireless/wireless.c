@@ -29,6 +29,9 @@ host_driver_t wireless_driver = {
     .send_nkro     = wireless_send_nkro,
     .send_mouse    = wireless_send_mouse,
     .send_extra    = wireless_send_extra,
+#ifdef RAW_ENABLE
+    .send_raw_hid  = md_send_raw,
+#endif
 };
 
 void wireless_init(void) {

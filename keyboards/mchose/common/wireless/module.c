@@ -5,6 +5,8 @@
 #include "module.h"
 #include "smsg.h"
 #include "uart.h"
+#include "raw_hid.h"
+#include "lowpower.h"
 
 #ifndef MD_BAUD_RATE
 #    define MD_BAUD_RATE 115200
@@ -101,23 +103,6 @@ static void md_calc_check_sum(uint8_t *data, uint32_t length) {
 
     data[length] = sum;
 }
-
-bool md_receive_process_user(uint8_t *pdata, uint8_t len) __attribute__((weak));
-bool md_receive_process_user(uint8_t *pdata, uint8_t len) {
-    return true;
-}
-
-bool md_receive_process_kb(uint8_t *pdata, uint8_t len) __attribute__((weak));
-bool md_receive_process_kb(uint8_t *pdata, uint8_t len) {
-    return md_receive_process_user(pdata, len);
-}
-
-void md_receive_raw_cb(uint8_t *pdata, uint8_t len) __attribute__((weak));
-void md_receive_raw_cb(uint8_t *pdata, uint8_t len) {}
-
-void md_receive_host_cb(bool resume) __attribute__((weak));
-void md_receive_host_cb(bool resume) {}
-
 static void md_receive_msg_task(void) {
     static uint32_t data_count = 0x00;
     static uint8_t data_remain = 0x00;
@@ -179,10 +164,6 @@ static void md_receive_msg_task(void) {
         if (md_check_sum(md_rev_payload, data_count)) {
             md_send_ack();
 
-            if (md_receive_process_kb(md_rev_payload, data_count) != true) {
-                return;
-            }
-
             switch (md_rev_payload[0]) {
                 case MD_REV_CMD_RAW: {
                     uint8_t *pdata;
@@ -193,7 +174,7 @@ static void md_receive_msg_task(void) {
 
                     if (len == sizeof(md_raw_payload)) {
                         memcpy(md_raw_payload, pdata, len);
-                        md_receive_raw_cb(md_raw_payload, len);
+                        raw_hid_receive(md_raw_payload, len);
                     }
                 } break;
                 case MD_REV_CMD_INDICATOR: {

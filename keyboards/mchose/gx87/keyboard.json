@@ -17,15 +17,16 @@
     "features": {
         "bootmagic": true,
         "command": false,
-        "console": true,
+        "console": false,
         "deferred_exec": true,
         "extrakey": true,
         "haptic": false,
         "mousekey": true,
         "nkro": true,
         "rgb_matrix": true,
-        "rgblight": false
-    },
+        "rgblight": false,
+        "via": true
+        },
     "keycodes": [
         {
             "key": "KC_USB"
