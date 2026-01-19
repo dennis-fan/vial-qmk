@@ -220,8 +220,14 @@ void show_battery_indicator(void){
 
     uint8_t battery_leds = level / 10;
 
+    if(level > 10) {
     for (uint8_t i = 18; i < battery_leds + 18; i++){
         rgb_matrix_set_color(i, 0,255,0);
+        }
+    } else {
+        for (uint8_t i = 18; i < 28; i++){
+            rgb_matrix_set_color(i, 255,0,0);
+        }
     }
 }
 
