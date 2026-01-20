@@ -259,11 +259,13 @@ uint32_t charge_callback(uint32_t trigger_time, void *cb_arg){
 
     if(indicator_config.charging_indicator_enabled && !battery_indicator_enabled){
         if(chg_status == CHARGING){
-            set_indicator_hsv(charge_colors[idx]);
+            HSV col = charge_colors[idx];
+            col.v = indicator_config.val;
+            set_indicator_hsv(col);
             idx++;
             if (idx > 5) idx = 0;
         } else if (chg_status == FULL) {
-            HSV green = {120, 255, 100};
+            HSV green = {120, 255, indicator_config.val};
             set_indicator_hsv(green);
             idx=0;
         }
