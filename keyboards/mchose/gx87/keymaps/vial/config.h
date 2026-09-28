@@ -9,3 +9,12 @@
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_REACTIVE
 #define RGB_MATRIX_DEFAULT_HUE 30 /* yellowish orange; 0 = red, 21 = orange, 43 = yellow */
 #define RGB_MATRIX_DEFAULT_SAT 255
+
+/* Timeless home row mods (urob / pgetreuer). Tapping term, permissive hold,
+ * chordal hold and flow tap are live Vial settings; these are the values a
+ * settings reset loads. Speculative hold is compile-time only. */
+#define TAPPING_TERM 250
+#define VIAL_DEFAULT_PERMISSIVE_HOLD
+#define VIAL_DEFAULT_CHORDAL_HOLD
+#define VIAL_DEFAULT_FLOW_TAP_TERM 150
+#define SPECULATIVE_HOLD

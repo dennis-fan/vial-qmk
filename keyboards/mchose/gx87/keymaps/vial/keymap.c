@@ -61,3 +61,12 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [3] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
 };
 #endif
+
+#ifdef SPECULATIVE_HOLD
+// QMK enables Speculative Hold only for Shift/Ctrl mod-taps by default, because
+// on Windows a lone GUI or Alt press opens the Start menu or focuses menus.
+// This keymap is Mac-first, where a lone Cmd/Option press is harmless.
+bool get_speculative_hold(uint16_t keycode, keyrecord_t *record) {
+    return true;
+}
+#endif
