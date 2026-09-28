@@ -209,11 +209,22 @@ void qmk_settings_reset(void) {
     QS.combo_term = COMBO_TERM;
     QS.tapping_term = TAPPING_TERM;
     QS.tapping_v2 = 0;
+    /* Keymap-level defaults for the tap-hold settings that Vial controls at runtime. */
+#ifdef VIAL_DEFAULT_PERMISSIVE_HOLD
+    QS.tapping_v2 |= (1 << QS_tapping_permissive_hold_bit);
+#endif
+#ifdef VIAL_DEFAULT_CHORDAL_HOLD
+    QS.tapping_v2 |= (1 << QS_tapping_chordal_hold_bit);
+#endif
     QS.quick_tap_term = TAPPING_TERM;
     QS.tap_code_delay = TAP_CODE_DELAY;
     QS.tap_hold_caps_delay = TAP_HOLD_CAPS_DELAY;
     QS.tapping_toggle = TAPPING_TOGGLE;
+#ifdef VIAL_DEFAULT_FLOW_TAP_TERM
+    QS.flow_tap_term = VIAL_DEFAULT_FLOW_TAP_TERM;
+#else
     QS.flow_tap_term = 0;
+#endif
 
     eeprom_settings_save();
 
