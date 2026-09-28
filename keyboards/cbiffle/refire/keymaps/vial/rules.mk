@@ -5,6 +5,6 @@ LTO_ENABLE = yes
 # Disable features to save space
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
-QMK_SETTINGS = no
+QMK_SETTINGS = yes
 COMBO_ENABLE = no
 KEY_OVERRIDE_ENABLE = no

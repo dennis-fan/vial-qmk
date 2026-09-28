@@ -7,3 +7,12 @@
 // Unlock combo: ESC (row 5, col 1) + Backspace (row 3, col 9)
 #define VIAL_UNLOCK_COMBO_ROWS { 5, 3 }
 #define VIAL_UNLOCK_COMBO_COLS { 1, 9 }
+
+/* Timeless home row mods (urob / pgetreuer). Tapping term, permissive hold,
+ * chordal hold and flow tap are live Vial settings; these are the values a
+ * settings reset loads. Speculative hold is compile-time only. */
+#define TAPPING_TERM 250
+#define VIAL_DEFAULT_PERMISSIVE_HOLD
+#define VIAL_DEFAULT_CHORDAL_HOLD
+#define VIAL_DEFAULT_FLOW_TAP_TERM 150
+#define SPECULATIVE_HOLD
