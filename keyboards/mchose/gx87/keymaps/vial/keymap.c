@@ -29,9 +29,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_LCTL, KC_LALT, KC_LGUI,                   KC_SPC,                                      KC_RGUI, KC_RALT, MO(1),   KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
 
     [1] = LAYOUT_ansi( /* FN */
-		EE_CLR,  KC_BRID, KC_BRIU,G(KC_TAB),KC_MYCM,KC_WSCH,G(S(KC_S)),KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, _______, _______,
-		QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_HUEU, RM_NEXT, _______, _______, _______, ID_SPDU,
-		_______, KC_2G4,  KC_BT1,  KC_BT2,  KC_BT3,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, ID_SPDD,
+		_______, KC_BRID, KC_BRIU,G(KC_TAB),KC_MYCM,KC_WSCH,G(S(KC_S)),KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, _______, QK_BOOT,
+		_______, _______, _______, _______, _______, _______, _______, _______, _______, RM_SATD, RM_SATU, RM_PREV, RM_NEXT, _______, _______, _______, ID_SPDU,
+		_______, KC_2G4,  KC_BT1,  KC_BT2,  KC_BT3,  _______, _______, _______, _______, _______, _______, RM_HUED, RM_HUEU, _______, _______, _______, ID_SPDD,
 		_______, TO(2),   _______, _______, _______, _______, _______, _______, _______, _______, _______, ID_HUEU,          _______,
 		ID_CHRG, _______, _______, _______, _______, BAT_LVL, _______, _______, ID_VALD, ID_VALU, ID_HUED,                   ID_MODE,          RM_VALU,
 		_______, GU_TOGG, _______,                            _______,                            _______, _______, _______, _______, RM_SPDD, RM_VALD, RM_SPDU),
