@@ -34,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______, KC_2G4,  KC_BT1,  KC_BT2,  KC_BT3,  _______, _______, _______, _______, _______, _______, RM_HUED, RM_HUEU, _______, _______, _______, ID_SPDD,
 		_______, TO(2),   _______, _______, _______, _______, _______, _______, _______, _______, _______, ID_HUEU,          _______,
 		ID_CHRG, _______, _______, _______, _______, BAT_LVL, _______, _______, ID_VALD, ID_VALU, ID_HUED,                   ID_MODE,          RM_VALU,
-		_______, GU_TOGG, _______,                            _______,                            _______, _______, _______, _______, RM_SPDD, RM_VALD, RM_SPDU),
+		_______, _______, _______,                            _______,                            _______, _______, _______, _______, RM_SPDD, RM_VALD, RM_SPDU),
 
     [2] = LAYOUT_ansi( /* Base */
 		KC_ESC,  KC_BRID, KC_BRIU,G(KC_TAB),G(KC_H),G(KC_SPC),G(S(KC_3)),KC_MPRV,KC_MPLY,KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, KC_F13,  KC_PSCR, KC_SCRL, KC_PAUS,
