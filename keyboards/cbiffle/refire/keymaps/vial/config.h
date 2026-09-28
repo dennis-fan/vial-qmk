@@ -7,6 +7,8 @@
 // Unlock combo: ESC (row 5, col 1) + Backspace (row 3, col 9)
 #define VIAL_UNLOCK_COMBO_ROWS { 5, 3 }
 #define VIAL_UNLOCK_COMBO_COLS { 1, 9 }
+// Hold the combo for 3 s (counter ticks every 100 ms) instead of the 5 s default
+#define VIAL_UNLOCK_COUNTER_MAX 30
 
 /* Timeless home row mods (urob / pgetreuer). Tapping term, permissive hold,
  * chordal hold and flow tap are live Vial settings; these are the values a
