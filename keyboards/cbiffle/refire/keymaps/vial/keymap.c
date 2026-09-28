@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,    KC_INS,  KC_HOME, KC_PGUP,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,    KC_DEL,  KC_END,  KC_PGDN,
-        KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
+        KC_CAPS, LCTL_T(KC_A), LALT_T(KC_S),LGUI_T(KC_D),LSFT_T(KC_F),KC_G,    KC_H,    RSFT_T(KC_J),RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_SCLN),KC_QUOT,          KC_ENT,
         KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,             KC_UP,
         KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT, KC_RGUI, MO(1),   KC_RCTL,    KC_LEFT, KC_DOWN, KC_RGHT
     ),
@@ -79,3 +79,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     }
     return state;
 }
+
+#ifdef SPECULATIVE_HOLD
+// QMK enables Speculative Hold only for Shift/Ctrl mod-taps by default, because
+// on Windows a lone GUI or Alt press opens the Start menu or focuses menus.
+// This board is used on macOS, where a lone Cmd/Option press is harmless.
+bool get_speculative_hold(uint16_t keycode, keyrecord_t *record) {
+    return true;
+}
+#endif
