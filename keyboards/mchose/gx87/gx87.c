@@ -9,6 +9,7 @@
 #include "keys.h"
 #include "print.h"
 #include "indicator.h"
+#include "keymap_introspection.h"
 
 #ifdef RGB_MATRIX_ENABLE
 const snled27351_led_t PROGMEM g_snled27351_leds[SNLED27351_LED_COUNT] = {
@@ -352,6 +353,22 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 #ifdef RGB_MATRIX_ENABLE
 
 #    ifdef WIRELESS_ENABLE
+// Find the LED under whichever key is currently bound to `keycode`, on any
+// layer, so the wireless mode indicator follows the key if it is remapped.
+static uint8_t wls_indicator_led(uint16_t keycode, uint8_t fallback) {
+    for (uint8_t layer = 0; layer < keymap_layer_count(); layer++) {
+        for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+            for (uint8_t col = 0; col < MATRIX_COLS; col++) {
+                if (keymap_key_to_keycode(layer, (keypos_t){.row = row, .col = col}) == keycode) {
+                    uint8_t led = g_led_config.matrix_co[row][col];
+                    if (led != NO_LED) return led;
+                }
+            }
+        }
+    }
+    return fallback;
+}
+
 bool wls_rgb_indicator_reset        = false;
 uint32_t wls_rgb_indicator_timer    = 0x00;
 uint32_t wls_rgb_indicator_interval = 0;
@@ -384,30 +401,30 @@ void wireless_devs_change_kb(uint8_t old_devs, uint8_t new_devs, bool reset) {
     switch (new_devs) {
         case DEVS_BT1: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(36, (RGB){RGB_WHITE}, 200, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_BT1, 36), (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(36, (RGB){RGB_WHITE}, 500, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_BT1, 36), (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         case DEVS_BT2: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(37, (RGB){RGB_WHITE}, 200, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_BT2, 37), (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(37, (RGB){RGB_WHITE}, 500, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_BT2, 37), (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         case DEVS_BT3: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(38, (RGB){RGB_WHITE}, 200, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_BT3, 38), (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(38, (RGB){RGB_WHITE}, 500, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_BT3, 38), (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         case DEVS_2G4: {
             if (reset) {
-                rgb_matrix_wls_indicator_set(35, (RGB){RGB_WHITE}, 200, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_2G4, 35), (RGB){RGB_WHITE}, 200, 1);
             } else {
-                rgb_matrix_wls_indicator_set(35, (RGB){RGB_WHITE}, 500, 1);
+                rgb_matrix_wls_indicator_set(wls_indicator_led(KC_2G4, 35), (RGB){RGB_WHITE}, 500, 1);
             }
         } break;
         default:
