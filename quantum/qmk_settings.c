@@ -216,7 +216,11 @@ void qmk_settings_reset(void) {
 #ifdef VIAL_DEFAULT_CHORDAL_HOLD
     QS.tapping_v2 |= (1 << QS_tapping_chordal_hold_bit);
 #endif
-    QS.quick_tap_term = TAPPING_TERM;
+#ifdef VIAL_DEFAULT_QUICK_TAP_TERM
+    QS.quick_tap_term = VIAL_DEFAULT_QUICK_TAP_TERM;
+#else
+    QS.quick_tap_term = QUICK_TAP_TERM;
+#endif
     QS.tap_code_delay = TAP_CODE_DELAY;
     QS.tap_hold_caps_delay = TAP_HOLD_CAPS_DELAY;
     QS.tapping_toggle = TAPPING_TOGGLE;
