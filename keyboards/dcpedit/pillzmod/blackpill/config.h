@@ -17,3 +17,8 @@
 
 #define LED_LAYER_PIN A2
 #define LED_ACTIVE_LOW
+/* Emulated EEPROM lives in flash sector 1 (16 KiB). Give the wear-leveling
+ * log the whole sector instead of the default half, so the 4 KiB logical
+ * EEPROM (10 layers of this 15x7 matrix plus Vial data) sees fewer erases. */
+#define WEAR_LEVELING_BACKING_SIZE 16384
+#define WEAR_LEVELING_LOGICAL_SIZE 4096

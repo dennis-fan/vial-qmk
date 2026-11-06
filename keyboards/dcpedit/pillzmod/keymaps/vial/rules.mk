@@ -1,7 +1,12 @@
-QMK_SETTINGS = no
-TAP_DANCE_ENABLE = no
-COMBO_ENABLE = no
-LTO_ENABLE = yes
 VIA_ENABLE = yes
 VIAL_ENABLE = yes
-VIAL_INSECURE = yes
+LTO_ENABLE = yes
+
+QMK_SETTINGS = yes
+TAP_DANCE_ENABLE = yes
+COMBO_ENABLE = yes
+KEY_OVERRIDE_ENABLE = no
+
+# Disable features to save space
+CONSOLE_ENABLE = no
+COMMAND_ENABLE = no

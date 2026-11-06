@@ -4,26 +4,17 @@
 
 #define NUM_LAYER     1
 
-void matrix_init_user(void) {
-  setPinOutput(LED_LAYER_PIN);
+void keyboard_pre_init_kb(void) {
+    gpio_set_pin_output(LED_LAYER_PIN);
+    keyboard_pre_init_user();
 }
 
-// Initialize your default layer
-layer_state_t layer_state_set_user(layer_state_t state) {
-  if (IS_LAYER_ON_STATE(state, NUM_LAYER)) {
+// Light the fourth status LED while the numpad layer is active
+layer_state_t layer_state_set_kb(layer_state_t state) {
+    bool on = IS_LAYER_ON_STATE(state, NUM_LAYER);
 #ifdef LED_ACTIVE_LOW
-    writePinLow(LED_LAYER_PIN);
-#else
-    writePinHigh(LED_LAYER_PIN);
+    on = !on;
 #endif
-  }
-  else {
-#ifdef LED_ACTIVE_LOW
-    writePinHigh(LED_LAYER_PIN);
-#else
-    writePinLow(LED_LAYER_PIN);
-#endif
-  }
-
-  return state;
+    gpio_write_pin(LED_LAYER_PIN, on);
+    return layer_state_set_user(state);
 }
